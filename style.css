@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: #0b0423;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#left,
+#right {
+    width: 300px;
+    min-height: 400px;
+    margin: 30px;
+    border: 2px groove rgb(198, 74, 74);
+    border-radius: 50px;
+    border-width: 6px;
+    background: rgb(155, 251, 251);
+}
+.list {
+    background: #e91e63;
+    height: 50px;
+    margin: 25px;
+    color: #fff;
+    display: flex;
+    cursor: grab;
+    align-items: center;
+}
+.list img {
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+
+.container button {
+    width: 50px;
+    background: #970083;
+    cursor: pointer;
+    color: rgb(237, 237, 237);
+    text-decoration: solid;
+    height: 35px;
+    border-radius: 15px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: all 1s;
+}
+.container button:hover {
+    transform: scale(1.2); /* Enlarge the button by scaling it to 120% */
+    background: rgb(246, 253, 153);
+    color: #0b0423; /* Change the background color to red */
+  }
+  .list.dragged {
+    opacity: 0.5; /* Reduce the opacity of the dragged item */
+    background-color: #009942; /* Change the background color of the dragged item */
+    transition: background-color 0.3s ease-in-out; /* Add a transition for smooth animation */
+  }
+  
+  .list.dragover {
+    background-color: rgb(219, 5, 230); /* Change the background color of the dragged-over item */
+    transition: background-color 0.3s ease-in-out; /* Add a transition for smooth animation */
+  }
+  .message-box {
+    position: fixed;
+    top: 87%;
+    left: 50%;
+    transform: translate(-35%, -50%);
+    background-color: #cd5016;
+    color: #f6f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 25px;
+    transition: opacity 3s ease-out;
+  }
+  @keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  
+  .page-animation {
+    animation: pageFadeIn 1s ease-out forwards;
+  }
+  
+
+  /* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    
+    #left,
+    #right {
+      width: 90%;
+      margin: 15px;
+    }
+    
+    .list {
+      height: 40px;
+      margin: 15px;
+      font-size: 14px;
+    }
+    
+    .list img {
+      width: 30px;
+      margin-left: 5px;
+      margin-right: 10px;
+    }
+    
+    .container button {
+      width: 40px;
+      height: 30px;
+      border-radius: 10px;
+    }
+    
+    .message-box {
+      top: 80%;
+      font-size: 20px;
+    }
+  }

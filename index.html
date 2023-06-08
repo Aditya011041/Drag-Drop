@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag-Drop</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body >
+    <div class="container">
+      <button type="button" style="font-size: medium">Reset</button>
+
+      <div id="left">
+        <div class="list" draggable="true">
+          <img src="./images/p4.ico" />Item_1
+        </div>
+        <div class="list" draggable="true">
+          <img src="./images/p5.ico" />Item_2
+        </div>
+        <div class="list" draggable="true">
+          <img src="./images/p6.ico" />Item_3
+        </div>
+        <div class="list" draggable="true">
+          <img src="./images/p7.ico" />Item_4
+        </div>
+        <div class="list" draggable="true">
+          <img src="./images/p8.ico" />Item_5
+        </div>
+      </div>
+      <div id="right"></div>
+    </div>
+
+    <script>
+      let lists = document.getElementsByClassName("list");
+      let rightBox = document.getElementById("right");
+      let leftBox = document.getElementById("left");
+      let originalLeftBoxContent = leftBox.innerHTML;
+
+      for (list of lists) {
+        list.addEventListener("dragstart", dragStartHandler);
+        list.addEventListener("dragenter", dragEnterHandler);
+        list.addEventListener("dragleave", dragLeaveHandler);
+        list.addEventListener("dragend", dragEndHandler);
+      }
+
+      function dragStartHandler(e) {
+        let selected = e.currentTarget; // Select the entire .list element
+
+        // Add a class to the dragged element to change its appearance
+        selected.classList.add("dragged");
+        // Add animation class to the dragged element
+        selected.classList.add("animate");
+
+        rightBox.addEventListener("dragover", function (e) {
+          e.preventDefault();
+        });
+
+        rightBox.addEventListener("drop", function (e) {
+          rightBox.appendChild(selected);
+          selected = null;
+          displaySuccessMessage(); // Call the function to display success message and trigger animation
+        });
+      }
+
+      function dragEnterHandler(e) {
+        // Add a class to the element being dragged over to change its appearance
+        e.currentTarget.classList.add("dragover");
+      }
+
+      function dragLeaveHandler(e) {
+        // Remove the class from the element when the dragged element leaves it
+        e.currentTarget.classList.remove("dragover");
+      }
+
+      function dragEndHandler(e) {
+        // Remove the classes from the dragged element when dragging ends
+        e.currentTarget.classList.remove("dragged");
+        e.currentTarget.classList.remove("dragover");
+
+        // Call the displaySuccessMessage() function when an item is successfully dropped
+        displaySuccessMessage();
+      }
+
+      let resetButton = document.querySelector(".container button");
+      resetButton.addEventListener("click", function () {
+        rightBox.innerHTML = "";
+        leftBox.innerHTML = originalLeftBoxContent;
+
+        // Remove event listeners before resetting
+        for (list of lists) {
+          list.removeEventListener("dragstart", dragStartHandler);
+          list.removeEventListener("dragenter", dragEnterHandler);
+          list.removeEventListener("dragleave", dragLeaveHandler);
+          list.removeEventListener("dragend", dragEndHandler);
+        }
+
+        // Reassign event listeners after resetting
+        lists = document.getElementsByClassName("list");
+        for (list of lists) {
+          list.addEventListener("dragstart", dragStartHandler);
+          list.addEventListener("dragenter", dragEnterHandler);
+          list.addEventListener("dragleave", dragLeaveHandler);
+          list.addEventListener("dragend", dragEndHandler);
+        }
+      });
+
+      function displaySuccessMessage() {
+  const messageBox = document.createElement("div");
+  messageBox.classList.add("message-box");
+  messageBox.textContent = "Successful";
+  document.body.appendChild(messageBox);
+
+  const lists = document.getElementsByClassName("list");
+  const leftBox = document.getElementById("left");
+  const rightBox = document.getElementById("right");
+
+  if (leftBox.innerHTML.trim() === "" && rightBox.contains(lists[0])) {
+    // Check if all items have been dragged and dropped
+    document.body.classList.add("page-animation"); // Add animation class to the body
+
+    setTimeout(function() {
+      messageBox.remove();
+      document.body.classList.remove("page-animation"); // Remove animation class from the body
+    }, 1200);
+  } else {
+    setTimeout(function() {
+      messageBox.remove();
+    }, 1200);
+  }
+}
+
+    </script>
+  </body>
+</html>
